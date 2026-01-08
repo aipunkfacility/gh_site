@@ -1,69 +1,29 @@
-<!-- src/views/HomeView.vue -->
+<script setup>
+// --- ИСПРАВЛЕНИЕ 2: Импорт и использование компонентов ---
+import HeroSection from '../components/home/HeroSection.vue'
+import BenefitsSection from '../components/home/BenefitsSection.vue'
+import ServiceCard from '../components/services/ServiceCard.vue'
+
+// Можно добавить скрипт для динамических данных, если нужно
+</script>
+
 <template>
-  <div class="home">
+  <main class="home-page">
     <!-- Hero Section -->
     <HeroSection />
-    
+
     <!-- Benefits Section -->
     <BenefitsSection />
-    
-    <!-- Popular Tours Section -->
-    <section class="section section--gray">
+
+    <!-- Preview Services (Optional example structure) -->
+    <section class="section-container">
       <div class="container">
-        <h2 class="section-title">Популярные экскурсии</h2>
-        <div v-if="toursStore.isLoading" class="loading">
-          <p>Загрузка туров...</p>
-        </div>
-        <div v-else-if="toursStore.tours.length > 0" class="cards-grid">
-          <TourCard 
-            v-for="tour in toursStore.tours.slice(0, 4)"
-            :key="tour.id"
-            :tour="tour"
-          />
-        </div>
-        <div v-else class="no-tours">
-          <p>Туры не найдены</p>
-        </div>
-        
-        <div class="text-center" style="margin-top: 32px;">
-          <RouterLink to="/tours" class="btn btn--secondary">
-            Смотреть все туры
-          </RouterLink>
+        <h2 class="section-title">Наши услуги</h2>
+        <div class="grid-3">
+            <!-- Здесь можно вывести превью услуг или оставить место под контент -->
+            <p>Добро пожаловать в наш гестхаус!</p>
         </div>
       </div>
     </section>
-  </div>
+  </main>
 </template>
-
-<script setup>
-import { onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
-import { useToursStore } from '@stores/tours.js';
-import HeroSection from '@components/home/HeroSection.vue';
-import BenefitsSection from '@components/home/BenefitsSection.vue';
-import TourCard from '@components/tours/TourCard.vue';
-
-const toursStore = useToursStore();
-
-onMounted(() => {
-  toursStore.fetchTours();
-});
-</script>
-
-<style scoped>
-.home {
-  width: 100%;
-}
-
-.loading,
-.no-tours {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text-gray);
-  font-size: 18px;
-}
-
-.text-center {
-  text-align: center;
-}
-</style>
