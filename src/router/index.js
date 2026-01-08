@@ -24,6 +24,13 @@ const router = createRouter({
       name: 'tours',
       component: () => import('../views/Tours.vue')
     },
+    // --- ВАЖНО: Добавлен маршрут для детальной страницы тура ---
+    {
+      path: '/tours/:id',
+      name: 'tour-detail',
+      component: () => import('../views/TourDetail.vue'),
+      props: true
+    },
     {
       path: '/rentals',
       name: 'rentals',
@@ -34,14 +41,12 @@ const router = createRouter({
       name: 'contacts',
       component: () => import('../views/Contacts.vue')
     },
-    // Catch all for 404
     {
       path: '/:pathMatch(.*)*',
       name: 'not-found',
       component: () => import('../views/NotFound.vue')
     }
   ],
-  // Прокрутка наверх при переходе
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
       return savedPosition
