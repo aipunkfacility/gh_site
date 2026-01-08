@@ -1,6 +1,6 @@
 <!-- src/components/tours/TourCard.vue -->
 <template>
-  <router-link :to="`/tour/${tour.id}`" class="card">
+  <router-link :to="`/tours/${tour.id}`" class="card">
     <div class="card__image-wrapper">
       <img
         :src="tour.image"
