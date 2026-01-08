@@ -199,4 +199,144 @@
   font-weight: 600;
   padding: 4px 8px;
   border-radius: 6px;
-  background: var(
+  background: var(--gray-light);
+  color: var(--text-gray);
+}
+
+.bike-badge.comfort {
+  background: #e8f5e9;
+  color: var(--secondary);
+}
+
+.bike-badge.maxi {
+  background: #fff3e0;
+  color: var(--primary);
+}
+
+.bike-specs {
+  display: flex;
+  gap: var(--spacing-md);
+  font-size: 13px;
+  color: var(--text-gray);
+  margin-bottom: var(--spacing-md);
+}
+
+.bike-spec-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.bike-price {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--dark);
+  margin-top: auto;
+  margin-bottom: var(--spacing-md);
+}
+
+/* Accommodation Card */
+.acc-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: var(--spacing-3xl);
+  box-shadow: var(--shadow);
+}
+
+.acc-img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  background: var(--gray-light);
+}
+
+.acc-content {
+  padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+.acc-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.acc-desc {
+  font-size: 16px;
+  color: var(--text-gray);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-xl);
+}
+
+.acc-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.acc-feature {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.acc-feature i {
+  color: var(--primary);
+}
+
+/* --- LAZY LOADING STYLES --- */
+
+/* Изображения при загрузке */
+img.loading {
+  animation: fadeIn var(--transition);
+  opacity: 0.5;
+  background: linear-gradient(
+    90deg,
+    var(--gray-light) 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    var(--gray-light) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite, fadeIn var(--transition);
+}
+
+/* Изображения после загрузки */
+img.loaded {
+  animation: fadeIn var(--transition) forwards;
+  opacity: 1;
+}
+
+/* Ошибка загрузки изображения */
+img.error {
+  opacity: 0.5;
+  border: 1px solid var(--error);
+}
+
+/* Анимация shimmer (мерцание) */
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Дополнительно: скрытие элементов */
+.hidden {
+  display: none !important;
+}
+
