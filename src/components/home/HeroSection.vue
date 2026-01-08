@@ -35,13 +35,8 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import { onMounted } from 'vue';
-import { initLazyLoading } from '@composables/useLazyLoad.js';
-
-onMounted(() => {
-  initLazyLoading();
-});
+};
 </script>
-
 <style scoped>
 .hero {
   position: relative;
