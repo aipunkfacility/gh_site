@@ -137,7 +137,7 @@ function openTourDetail(id) {
     const bookBtn = document.querySelector('.booking-bar button');
     if (bookBtn) {
         // ВПИШИТЕ СЮДА СВОЙ НОМЕР (без плюса)
-        const phone = '84999999999'; 
+        const phone = '84372733431'; 
         
         const text = `Здравствуйте! Хочу забронировать тур: ${tour.title}`;
         // Формируем ссылку
@@ -153,3 +153,4 @@ function openTourDetail(id) {
 
 // Запуск приложения после загрузки HTML
 document.addEventListener('DOMContentLoaded', initApp);
+
