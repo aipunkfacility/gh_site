@@ -1,7 +1,14 @@
+/* 1. Переменные и сброс */
+@import '../css/variables.css';
+
+/* 2. Tailwind (база) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Старые импорты (@import '/css/...') удалены, 
-  так как теперь все файлы подключены в src/main.js 
-*/
+/* 3. Кастомные стили (переопределяют Tailwind при необходимости) */
+@import '../css/layout.css';
+@import '../css/components.css';
+@import '../css/buttons.css';
+@import '../css/pages.css';
+@import '../css/style.css';
