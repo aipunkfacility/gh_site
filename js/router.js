@@ -1,118 +1,73 @@
-// js/render.js
-
-// Ваш номер WhatsApp (формат: 84... без плюса)
-const PHONE = '84999999999'; 
-
-export function createCardHTML(item) {
-    const badgeHTML = item.badge ? `<span class="badge badge--${item.badge === 'ХИТ' ? 'hit' : 'new'}">${item.badge}</span>` : '';
-    return `
-        <article class="card tour-card-trigger" data-id="${item.id}">
-            <div class="card__image-wrapper">
-                ${badgeHTML}
-                <img src="${item.image}" class="card__image" alt="${item.title}">
-            </div>
-            <div class="card__content">
-                <h3 class="card__title">${item.title}</h3>
-                <p class="card__desc">${item.desc}</p>
-                <div class="card__footer">
-                    <span class="card__price">${item.price}</span>
-                    <button class="card__btn">Подробнее</button>
-                </div>
-            </div>
-        </article>
-    `;
-}
-
-export function createBikeCard(bike) {
-    // Формируем текст сообщения
-    const text = `Здравствуйте! Хочу арендовать байк: ${bike.model}`;
-    const link = `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
-
-    return `
-       <div class="bike-card">
-           <img src="${bike.image}" alt="${bike.model}" class="bike-card__img">
-           <div class="bike-card__content">
-               <div class="bike-header">
-                   <h3 class="bike-title">${bike.model}</h3>
-                   <span class="bike-badge ${bike.badgeClass}">${bike.type}</span>
-               </div>
-               <div class="bike-specs">
-                   <span class="bike-spec-item"><i class="fa-solid fa-gauge-high"></i> ${bike.cc}</span>
-               </div>
-               <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 16px;">${bike.desc}</p>
-               <div class="bike-price">${bike.price} <span style="font-size: 12px; font-weight: 400; color: #999;">/ сутки</span></div>
-               <button class="btn btn--primary" style="width: 100%; padding: 12px;" onclick="window.open('${link}', '_blank')">Забронировать</button>
-           </div>
-       </div>
-   `;
-}
-
-export function createServiceHTML(item) {
-    const text = `Здравствуйте! Интересует услуга: ${item.title}`;
-    const link = `https://wa.me/84372733431${PHONE}?text=${encodeURIComponent(text)}`;
-
-    return `
-       <div class="service-item">
-           <img src="${item.image}" alt="${item.title}">
-           <div class="service-item-content">
-               <h3>${item.title}</h3>
-               <p style="color: var(--text-gray); margin-bottom: 16px; white-space: pre-line;">${item.desc}</p>
-               <button class="btn btn--secondary" style="width: 100%;" onclick="window.open('${link}', '_blank')">${item.btnText}</button>
-           </div>
-       </div>
-   `;
-}
-
-export function renderTourDetail(tour) {
-    let programHTML = '';
-    if (tour.program && tour.program.length > 0) {
-         programHTML = `
-            <h3 style="margin-bottom: 20px;">Программа</h3>
-            <div class="timeline">
-                ${tour.program.map(step => `
-                    <div class="timeline-item">
-                        <span class="timeline-time">${step.time}</span>
-                        <div class="timeline-title">${step.title}</div>
-                        <p style="font-size: 14px; color: var(--text-gray);">${step.desc}</p>
-                    </div>
-                `).join('')}
-            </div>
-         `;
+/**
+ * Функция навигации
+ * @param {string} viewId - ID экрана (например, 'home', 'tours')
+ * @param {boolean} addToHistory - Добавлять ли запись в историю браузера
+ */
+export function navigateTo(viewId, addToHistory = true) {
+    // 1. Скрываем все экраны
+    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+    
+    // 2. Находим нужный экран
+    const target = document.getElementById(`view-${viewId}`);
+    if(target) {
+        target.classList.add('active');
+        window.scrollTo(0, 0);
+    } else {
+        console.error(`View not found: view-${viewId}`);
+        return;
     }
 
-    return `
-        <div class="tour-header">
-            <img src="${tour.image}" class="tour-header__img" alt="${tour.title}">
-            <div class="tour-header__overlay"></div>
-            <div class="tour-header__content">
-                ${tour.badge ? `<span class="badge badge--hit" style="position: static; display: inline-block; margin-bottom: 8px;">${tour.badge}</span>` : ''}
-                <h1 style="font-size: 28px; margin-bottom: 0; color: white;">${tour.title}</h1>
-            </div>
-        </div>
+    // 3. Работаем с историей браузера
+    if (addToHistory) {
+        const url = viewId === 'home' ? window.location.pathname : `?page=${viewId}`;
+        history.pushState({ view: viewId }, null, url);
+    }
 
-        <div class="tour-body">
-            <div class="tour-meta">
-                ${tour.meta.map(m => `<div class="meta-item">${m}</div>`).join('')}
-            </div>
+    // 4. Скрываем форму контактов на странице тура
+    const footerForm = document.getElementById('contact-form-section');
+    if (footerForm) {
+        if (viewId === 'tour-detail') {
+            footerForm.classList.add('hidden');
+        } else {
+            footerForm.classList.remove('hidden');
+        }
+    }
 
-            <p style="margin-bottom: 32px; color: var(--text-gray); font-size: 16px; white-space: pre-line;">
-                ${tour.fullDesc}
-            </p>
+    // 5. Обновляем активную ссылку в меню
+    document.querySelectorAll('.header__link, .mobile-menu__link').forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.link === viewId) {
+            link.classList.add('active');
+        }
+    });
 
-            ${programHTML}
-
-            <div style="background: #f9f9f9; padding: 24px; border-radius: 16px; margin-bottom: 32px;">
-                <h3 style="margin-bottom: 16px;">В стоимость включено</h3>
-                <ul class="check-list">
-                    ${tour.included.map(item => `<li>${item}</li>`).join('')}
-                </ul>
-                ${tour.excluded && tour.excluded.length > 0 ? `
-                    <h3 style="margin-top: 24px; margin-bottom: 16px;">Не включено</h3>
-                    <ul class="cross-list">
-                        ${tour.excluded.map(item => `<li>${item}</li>`).join('')}
-                    </ul>
-                ` : ''}
-            </div>
-        </div>
-    `;
+    // 6. Закрываем мобильное меню
+    const mobileMenu = document.getElementById('mobileMenu');
+    const burgerIcon = document.querySelector('.header__burger i');
+    if (mobileMenu && mobileMenu.classList.contains('active')) {
+        mobileMenu.classList.remove('active');
+        document.body.style.overflow = '';
+        if(burgerIcon) {
+            burgerIcon.classList.remove('fa-xmark');
+            burgerIcon.classList.add('fa-bars');
+        }
+    }
 }
+
+// Слушатель кнопки "Назад" в браузере
+window.addEventListener('popstate', (event) => {
+    if (event.state && event.state.view) {
+        navigateTo(event.state.view, false);
+    } else {
+        navigateTo('home', false);
+    }
+});
+
+// Обработка прямой ссылки при загрузке
+document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get('page');
+    if (page) {
+        setTimeout(() => navigateTo(page, false), 50); 
+    }
+});
