@@ -1,8 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-/**
- * Маршруты приложения
- */
 const routes = [
   {
     path: '/',
@@ -11,20 +8,9 @@ const routes = [
     meta: {
       title: 'Home'
     }
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import('@views/AboutView.vue'),
-    meta: {
-      title: 'About'
-    }
   }
 ];
 
-/**
- * Экземпляр роутера
- */
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
@@ -33,9 +19,6 @@ const router = createRouter({
   }
 });
 
-/**
- * Обновление title страницы
- */
 router.beforeEach((to, from, next) => {
   if (to.meta?.title) {
     document.title = to.meta.title;
