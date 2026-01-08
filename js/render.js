@@ -37,7 +37,7 @@ export function createBikeCard(bike) {
                </div>
                <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 16px;">${bike.desc}</p>
                <div class="bike-price">${bike.price} <span style="font-size: 12px; font-weight: 400; color: #999;">/ сутки</span></div>
-               <button class="btn btn--primary" style="width: 100%; padding: 12px;" onclick="window.open('https://wa.me/84999999999?text=Здравствуйте, хочу забронировать тур', '_blank')"
+               <button class="btn btn--primary" style="width: 100%; padding: 12px;" onclick="window.open('https://wa.me/84372733431?text=Здравствуйте, хочу забронировать тур', '_blank')"
            </div>
        </div>
    `;
@@ -111,3 +111,4 @@ export function renderTourDetail(tour) {
         </div>
     `;
 }
+
