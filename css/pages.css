@@ -1,0 +1,89 @@
+/* --- FOOTER & FORMS --- */
+.footer-form {
+  background: var(--secondary);
+  color: var(--white);
+  padding: 60px 20px;
+  border-radius: 24px 24px 0 0;
+  margin-top: 40px;
+}
+
+.form-input {
+  width: 100%;
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-btn);
+  border: none;
+  font-size: 16px;
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-input:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Floating Button */
+.floating-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--whatsapp) 0%,
+    var(--telegram) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 28px;
+  box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+  z-index: 90;
+  transition: transform var(--transition);
+}
+
+.floating-btn:hover {
+  transform: scale(1.1);
+}
+
+/* --- CONTACTS PAGE --- */
+.contacts-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* --- SERVICES PAGE --- */
+.service-list {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  padding: 0 var(--spacing-lg);
+}
+
+.service-item {
+  background: white;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--gray-border);
+}
+
+.service-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.service-item-content {
+  padding: var(--spacing-xl);
+}
+
+.service-item h3 {
+  color: var(--secondary);
+  font-size: 20px;
+  margin-bottom: var(--spacing-sm);
+  
