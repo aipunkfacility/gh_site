@@ -1,227 +1,124 @@
-<!-- src/components/layout/Header.vue -->
+<script setup>
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
+
+// --- ИСПРАВЛЕНИЕ 3: Логика мобильного меню ---
+const isMenuOpen = ref(false)
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const closeMenu = () => {
+  isMenuOpen.value = false
+}
+</script>
+
 <template>
   <header class="header">
-    <!-- Логотип -->
-    <RouterLink to="/" class="header__logo">
-      <i class="fa-solid fa-leaf"></i>
-      <span>GreenHill<span class="primary">Tours</span></span>
-    </RouterLink>
-
-    <!-- Десктоп навигация -->
-    <nav class="header__nav">
-      <RouterLink 
-        v-for="link in navLinks" 
-        :key="link.path"
-        :to="link.path"
-        class="header__link"
-        :class="{ active: $route.path === link.path }"
-      >
-        {{ link.label }}
+    <div class="container header__container">
+      <!-- Logo -->
+      <RouterLink to="/" class="header__logo" @click="closeMenu">
+        GuestHouse
       </RouterLink>
-    </nav>
 
-    <!-- Бургер меню (мобильное) -->
-    <button 
-      class="header__burger"
-      @click="toggleMenu"
-      :aria-label="isMenuOpen ? 'Закрыть меню' : 'Открыть меню'"
-    >
-      <i :class="isMenuOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'"></i>
-    </button>
+      <!-- Desktop Navigation -->
+      <nav class="header__nav desktop-only">
+        <ul class="header__menu">
+          <li><RouterLink to="/" class="header__link">Главная</RouterLink></li>
+          <li><RouterLink to="/accommodation" class="header__link">Номера</RouterLink></li>
+          <li><RouterLink to="/services" class="header__link">Услуги</RouterLink></li>
+          <li><RouterLink to="/tours" class="header__link">Туры</RouterLink></li>
+          <li><RouterLink to="/rentals" class="header__link">Аренда</RouterLink></li>
+          <li><RouterLink to="/contacts" class="header__link">Контакты</RouterLink></li>
+        </ul>
+      </nav>
 
-    <!-- Мобильное меню -->
-    <nav v-if="isMenuOpen" class="mobile-menu" :class="{ active: isMenuOpen }">
-      <RouterLink 
-        v-for="link in navLinks"
-        :key="link.path"
-        :to="link.path"
-        class="mobile-menu__link"
-        @click="closeMenu"
-      >
-        {{ link.label }}
-      </RouterLink>
-      
+      <!-- Mobile Menu Button -->
       <button 
-        class="btn btn--primary mobile-menu__telegram"
-        @click="openTelegram"
+        class="header__burger mobile-only" 
+        @click="toggleMenu"
+        :class="{ 'is-active': isMenuOpen }"
+        aria-label="Toggle menu"
       >
-        <i class="fa-brands fa-telegram"></i>
-        Написать в Telegram
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
-    </nav>
+
+      <!-- Mobile Navigation Overlay -->
+      <div class="mobile-menu" :class="{ 'is-open': isMenuOpen }">
+        <nav class="mobile-menu__nav">
+          <ul class="mobile-menu__list">
+            <li><RouterLink to="/" @click="closeMenu">Главная</RouterLink></li>
+            <li><RouterLink to="/accommodation" @click="closeMenu">Номера</RouterLink></li>
+            <li><RouterLink to="/services" @click="closeMenu">Услуги</RouterLink></li>
+            <li><RouterLink to="/tours" @click="closeMenu">Туры</RouterLink></li>
+            <li><RouterLink to="/rentals" @click="closeMenu">Аренда</RouterLink></li>
+            <li><RouterLink to="/contacts" @click="closeMenu">Контакты</RouterLink></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </header>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import { RouterLink, useRoute } from 'vue-router';
-import { useAppStore } from '@stores/app.js';
-
-const appStore = useAppStore();
-const route = useRoute();
-const isMenuOpen = ref(false);
-
-const navLinks = [
-  { path: '/', label: 'Главная' },
-  { path: '/tours', label: 'Экскурсии' },
-  { path: '/rentals', label: 'Аренда' },
-  { path: '/accommodation', label: 'Проживание' },
-  { path: '/services', label: 'Сервисы' },
-  { path: '/contacts', label: 'Контакты' },
-];
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-  if (isMenuOpen.value) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-  }
-};
-
-const closeMenu = () => {
-  isMenuOpen.value = false;
-  document.body.style.overflow = '';
-};
-
-const openTelegram = () => {
-  window.open(appStore.telegramLink, '_blank');
-  closeMenu();
-};
-</script>
-
 <style scoped>
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--header-height);
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-}
-
-.header__logo {
-  font-weight: 800;
-  font-size: 20px;
-  color: var(--secondary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: color var(--transition);
-}
-
-.header__logo:hover {
-  color: var(--primary);
-}
-
-.header__logo .primary {
-  color: var(--primary);
-}
-
-.header__burger {
-  font-size: 24px;
-  color: var(--dark);
-  cursor: pointer;
-  background: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.header__nav {
-  display: none;
-}
-
+/* Дополнительные стили для мобильного меню, если их нет в css файлах */
 .mobile-menu {
   position: fixed;
-  top: var(--header-height);
+  top: 60px; /* Высота хедера */
   left: 0;
   width: 100%;
-  height: calc(100vh - var(--header-height));
-  background: var(--white);
+  height: calc(100vh - 60px);
+  background: white;
   transform: translateX(100%);
-  transition: transform 0.3s ease;
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  padding: 40px 20px;
-  overflow-y: auto;
+  transition: transform 0.3s ease-in-out;
+  z-index: 40;
 }
 
-.mobile-menu.active {
+.mobile-menu.is-open {
   transform: translateX(0);
 }
 
-.mobile-menu__link {
-  font-size: 20px;
-  font-weight: 600;
-  padding: 16px 0;
-  border-bottom: 1px solid #eee;
-  color: var(--dark);
+.mobile-menu__list {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.mobile-menu__list a {
+  font-size: 1.2rem;
+  color: var(--text-color, #333);
   text-decoration: none;
+}
+
+/* Стили для бургера */
+.header__burger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: color var(--transition);
+  z-index: 50;
 }
 
-.mobile-menu__link:hover {
-  color: var(--primary);
+.header__burger span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  transition: 0.3s;
 }
 
-.mobile-menu__telegram {
-  margin-top: auto;
-  width: 100%;
+@media (min-width: 768px) {
+  .mobile-only { display: none; }
+  .mobile-menu { display: none; }
 }
-
-/* Десктоп */
-@media (min-width: 1200px) {
-  .header {
-    padding: 0 80px;
-  }
-
-  .header__burger,
-  .mobile-menu {
-    display: none !important;
-  }
-
-  .header__nav {
-    display: flex;
-    gap: 24px;
-  }
-
-  .header__link {
-    font-weight: 600;
-    font-size: 16px;
-    color: var(--dark);
-    position: relative;
-    white-space: nowrap;
-    cursor: pointer;
-    text-decoration: none;
-    transition: color var(--transition);
-  }
-
-  .header__link:hover,
-  .header__link.active {
-    color: var(--primary);
-  }
-
-  .header__link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: var(--primary);
-  }
+@media (max-width: 767px) {
+  .desktop-only { display: none; }
 }
 </style>
