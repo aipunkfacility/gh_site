@@ -111,8 +111,7 @@ function setupEventListeners() {
 // Специальная функция для клика по карточке тура
 function setupTourClickEvents() {
     document.querySelectorAll('.tour-card-trigger').forEach(card => {
-        // Удаляем старые слушатели (клон ноды), чтобы не дублировать, или просто вешаем новые
-        // Простой вариант:
+        // Вешаем событие на клик
         card.onclick = () => {
             const id = parseInt(card.dataset.id);
             openTourDetail(id);
@@ -120,7 +119,8 @@ function setupTourClickEvents() {
     });
 }
 
-// Открытие детальной страницы тура
+// --- ОБНОВЛЕННАЯ ФУНКЦИЯ ---
+// Открытие детальной страницы тура + Настройка кнопки WhatsApp
 function openTourDetail(id) {
     // Ищем тур в массиве toursData
     const tour = toursData.find(t => t.id === id);
@@ -132,6 +132,20 @@ function openTourDetail(id) {
     // Генерируем HTML через функцию из render.js
     if(container) container.innerHTML = renderTourDetail(tour);
     if(priceEl) priceEl.innerText = tour.price;
+
+    // --- ЛОГИКА ДЛЯ КНОПКИ БРОНИРОВАНИЯ ---
+    const bookBtn = document.querySelector('.booking-bar button');
+    if (bookBtn) {
+        // ВПИШИТЕ СЮДА СВОЙ НОМЕР (без плюса)
+        const phone = '84999999999'; 
+        
+        const text = `Здравствуйте! Хочу забронировать тур: ${tour.title}`;
+        // Формируем ссылку
+        const link = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+        
+        // Назначаем действие на клик
+        bookBtn.onclick = () => window.open(link, '_blank');
+    }
 
     // Переходим на экран деталей
     navigateTo('tour-detail');
