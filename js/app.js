@@ -1,6 +1,8 @@
+// js/app.js
 import { toursData, bikesData, servicesData } from './data.js';
 import { createCardHTML, createBikeCard, createServiceHTML, renderTourDetail } from './render.js';
 import { navigateTo } from './router.js';
+import { config, getWhatsAppLink } from './config.js';
 
 // Инициализация приложения
 function initApp() {
@@ -21,6 +23,7 @@ function initApp() {
     
     renderBikes();
     setupEventListeners();
+    updateContactLinks();
 }
 
 function renderTours(data) {
@@ -109,14 +112,60 @@ function openTourDetail(id) {
 
     const bookBtn = document.querySelector('.booking-bar button');
     if (bookBtn) {
-        const phone = '84372733431'; 
-        const text = `Здравствуйте! Хочу забронировать тур: ${tour.title}`;
-        const link = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-        
+        const messageText = config.messages.tourBooking(tour.title);
+        const link = getWhatsAppLink(messageText);
         bookBtn.onclick = () => window.open(link, '_blank');
     }
 
     navigateTo('tour-detail');
+}
+
+// Обновление всех контактных ссылок из config
+function updateContactLinks() {
+    // Обновляем floating button
+    const floatingBtn = document.querySelector('.floating-btn');
+    if (floatingBtn) {
+        floatingBtn.href = config.contacts.whatsappUrl;
+    }
+
+    // Обновляем кнопку Telegram в мобильном меню
+    const telegramBtn = document.querySelector('.mobile-menu__telegram');
+    if (telegramBtn) {
+        telegramBtn.onclick = () => window.open(config.contacts.telegramUrl, '_blank');
+    }
+
+    // Обновляем форму в футере
+    const footerForm = document.querySelector('.footer-form form');
+    if (footerForm) {
+        footerForm.onsubmit = (e) => {
+            e.preventDefault();
+            window.open(config.contacts.whatsappUrl, '_blank');
+        };
+    }
+
+    // Обновляем кнопку WhatsApp на странице контактов
+    const contactWhatsAppBtn = document.querySelector('.contact-card .btn--primary');
+    if (contactWhatsAppBtn) {
+        contactWhatsAppBtn.onclick = () => window.open(config.contacts.whatsappUrl, '_blank');
+    }
+
+    // Обновляем кнопку аренды авто
+    const carRentalBtn = document.querySelector('[onclick*="Toyota Vios"]');
+    if (carRentalBtn) {
+        carRentalBtn.onclick = () => {
+            const link = getWhatsAppLink(config.messages.carRental);
+            window.open(link, '_blank');
+        };
+    }
+
+    // Обновляем кнопку проживания
+    const accommodationBtn = document.querySelector('[onclick*="Green Hill"]');
+    if (accommodationBtn) {
+        accommodationBtn.onclick = () => {
+            const link = getWhatsAppLink(config.messages.accommodation);
+            window.open(link, '_blank');
+        };
+    }
 }
 
 document.addEventListener('DOMContentLoaded', initApp);
