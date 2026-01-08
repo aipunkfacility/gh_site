@@ -1,69 +1,35 @@
-// src/stores/tours.js
-import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { defineStore } from 'pinia'
 
-export const useToursStore = defineStore('tours', () => {
-  const tours = ref([]);
-  const selectedTour = ref(null);
-  const filter = ref('all');
-  const isLoading = ref(false);
-  const error = ref(null);
-
-  // Methods
-  async function fetchTours() {
-    try {
-      isLoading.value = true;
-      error.value = null;
-      
-      // TODO: Заменить на реальный API call
-      // const response = await fetch('/api/tours');
-      // tours.value = await response.json();
-      
-      console.log('📦 Tours fetched');
-    } catch (err) {
-      error.value = err.message;
-      console.error('❌ Error fetching tours:', err);
-    } finally {
-      isLoading.value = false;
-    }
+export const useToursStore = defineStore('tours', {
+  state: () => ({
+    tours: [
+      {
+        id: 1,
+        title: 'Горный поход',
+        description: 'Увлекательное путешествие по горным тропам с опытным гидом.',
+        price: '5000 ₽',
+        duration: '6 часов',
+        image: '/images/tour-1.jpg' // Убедись, что картинки есть, или используй заглушки
+      },
+      {
+        id: 2,
+        title: 'Озерная прогулка',
+        description: 'Спокойная прогулка на лодке по зеркальному озеру.',
+        price: '3500 ₽',
+        duration: '3 часа',
+        image: '/images/tour-2.jpg'
+      },
+      {
+        id: 3,
+        title: 'Велотур по лесу',
+        description: 'Активный отдых для любителей скорости и природы.',
+        price: '2500 ₽',
+        duration: '4 часа',
+        image: '/images/tour-3.jpg'
+      }
+    ]
+  }),
+  getters: {
+    getAllTours: (state) => state.tours
   }
-
-  function getTourById(id) {
-    return tours.value.find(t => t.id === id);
-  }
-
-  function setSelectedTour(tour) {
-    selectedTour.value = tour;
-  }
-
-  function setFilter(filterValue) {
-    filter.value = filterValue;
-  }
-
-  // Getters
-  const filteredTours = computed(() => {
-    if (filter.value === 'all') return tours.value;
-    return tours.value.filter(t => t.category?.includes(filter.value));
-  });
-
-  const toursCount = computed(() => tours.value.length);
-
-  return {
-    // State
-    tours,
-    selectedTour,
-    filter,
-    isLoading,
-    error,
-    
-    // Methods
-    fetchTours,
-    getTourById,
-    setSelectedTour,
-    setFilter,
-    
-    // Getters
-    filteredTours,
-    toursCount
-  };
-});
+})
