@@ -1,227 +1,30 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Hill Tours | Экскурсии и сервис в Муйне</title>
-    <!-- Шрифты -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Иконки -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Стили -->
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenHill Tours | Экскурсии и сервис в Муйне</title>
+  
+  <!-- Шрифты -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Иконки -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Meta tags for SEO -->
+  <meta name="description" content="GreenHill Tours - лучший выбор для экскурсий, аренды транспорта и проживания в Муйне, Вьетнам">
+  <meta name="keywords" content="туры, экскурсии, Муйне, Вьетнам, аренда байков, проживание">
+  <meta property="og:title" content="GreenHill Tours | Экскурсии в Муйне">
+  <meta property="og:description" content="Профессиональные туры и сервисы в Муйне с русскими гидами">
+  <meta property="og:image" content="/images/og-image.jpg">
 </head>
 <body>
-
-    <!-- Header -->
-    <header class="header">
-        <a href="#home" class="header__logo" data-link="home">
-            <i class="fa-solid fa-leaf" style="color: #2D5F3E;"></i>
-            GreenHill<span>Tours</span>
-        </a>
-        
-        <!-- Desktop Nav -->
-        <nav class="header__nav">
-            <a data-link="home" class="header__link">Главная</a>
-            <a data-link="tours" class="header__link">Экскурсии</a>
-            <a data-link="rentals" class="header__link">Аренда</a>
-            <a data-link="accommodation" class="header__link">Проживание</a>
-            <a data-link="services" class="header__link">Сервисы</a>
-            <a data-link="contacts" class="header__link">Контакты</a>
-        </nav>
-
-        <div class="header__burger" id="burgerBtn">
-            <i class="fa-solid fa-bars"></i>
-        </div>
-    </header>
-
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a data-link="home" class="mobile-menu__link">Главная</a>
-        <a data-link="tours" class="mobile-menu__link">Экскурсии</a>
-        <a data-link="rentals" class="mobile-menu__link">Аренда (Байки/Авто)</a>
-        <a data-link="accommodation" class="mobile-menu__link">Проживание</a>
-        <a data-link="services" class="mobile-menu__link">Сервисы</a>
-        <a data-link="contacts" class="mobile-menu__link">Контакты</a>
-        <!-- Кнопка Telegram в меню (управляется через JS + config) -->
-        <button class="btn btn--primary mobile-menu__telegram" style="margin-top: auto;">
-            <i class="fa-brands fa-telegram"></i> Написать в Telegram
-        </button>
-    </div>
-
-    <main>
-        <!-- VIEW: HOME -->
-        <div id="view-home" class="view active">
-            <section class="hero">
-                <picture class="hero__media">
-                    <source media="(min-width: 768px)" srcset="images/hero-desktop.jpg">
-                    <img class="hero__img" src="images/hero-mobile.jpg" alt="">
-                </picture>
-
-                <div class="hero__overlay"></div>
-
-                <div class="hero__content">
-                    <h1>Муйне: Отдых без забот</h1>
-                    <p class="hero__subtitle">Мы поможем сделать ваш отдых комфортным и безопасным. Экскурсии, трансферы и байки от местных экспертов.</p>
-                    <div class="hero__actions">
-                        <button data-link="tours" class="btn btn--primary">Выбрать экскурсию</button>
-                        <button data-link="rentals" class="btn btn--secondary">Арендовать байк</button>
-                    </div>
-                </div>
-            </section>
-
-            <section class="benefits">
-                <div class="benefits__grid">
-                    <div class="benefit-item"><div class="benefit-icon"><i class="fa-solid fa-wallet"></i></div><span class="benefit-text">Гарантия брони</span></div>
-                    <div class="benefit-item"><div class="benefit-icon"><i class="fa-solid fa-language"></i></div><span class="benefit-text">Русские гиды</span></div>
-                    <div class="benefit-item"><div class="benefit-icon"><i class="fa-solid fa-shield-heart"></i></div><span class="benefit-text">Страховка</span></div>
-                </div>
-            </section>
-
-            <section class="section section--gray">
-                <h2 class="section-title">Популярное</h2>
-                <div id="home-popular-grid" class="cards-grid"></div>
-                <div class="text-center" style="margin-top: 32px;">
-                    <button data-link="tours" class="btn btn--secondary">Смотреть все туры</button>
-                </div>
-            </section>
-        </div>
-
-        <!-- VIEW: TOURS CATALOG -->
-        <div id="view-tours" class="view">
-            <div style="padding-top: 40px;" class="section--gray">
-                <h1 class="section-title">Все экскурсии</h1>
-                
-                <div class="filters-wrapper">
-                    <div class="filters" id="tour-filters">
-                        <button class="filter-btn active" data-filter="all">Все</button>
-                        <button class="filter-btn" data-filter="jeep">Джип-туры</button>
-                        <button class="filter-btn" data-filter="mountain">Горы</button>
-                        <button class="filter-btn" data-filter="sea">Море</button>
-                        <button class="filter-btn" data-filter="city">Город</button>
-                    </div>
-                </div>
-
-                <div id="tours-grid" class="cards-grid" style="padding: 0 20px 60px;"></div>
-            </div>
-        </div>
-
-        <!-- VIEW: TOUR DETAIL -->
-        <div id="view-tour-detail" class="view">
-            <button class="tour-header__back" data-link="tours"><i class="fa-solid fa-arrow-left"></i></button>
-            <div id="tour-detail-content"></div>
-            
-            <!-- Sticky Bottom Bar -->
-            <div class="booking-bar">
-                <div class="booking-price">
-                    <span>Стоимость</span>
-                    <strong id="detail-price-bar">$0</strong>
-                </div>
-                <button class="btn btn--primary btn--sm">Забронировать</button>
-            </div>
-        </div>
-
-        <!-- VIEW: RENTALS -->
-        <div id="view-rentals" class="view">
-            <div class="section">
-                <h1 class="section-title">Аренда транспорта</h1>
-                <p class="text-center" style="margin-bottom: 32px; color: var(--text-gray); max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Весь парк обслужен, проверен и готов к поездкам. Шлемы предоставляем. Выбирайте под свои задачи:
-                </p>
-                
-                <h2 class="rentals-category">🟢 Категория STANDARD</h2>
-                <div class="rentals-intro">Идеальны для пляжа, поездок на рынок и спокойной езды.</div>
-                <div id="bikes-list-standard"></div>
-
-                <h2 class="rentals-category">🔵 Категория COMFORT</h2>
-                <div class="rentals-intro">Мощнее, устойчивее, подходит для поездок вдвоем.</div>
-                <div id="bikes-list-comfort"></div>
-
-                <h2 class="rentals-category">👑 Макси-скутеры</h2>
-                <div class="rentals-intro">Для дальних поездок и максимального комфорта.</div>
-                <div id="bikes-list-maxi"></div>
-
-                <h2 class="rentals-category">🏍 Мотоциклы (Механика)</h2>
-                <div class="rentals-intro">Для тех, кто умеет управлять сцеплением.</div>
-                <div id="bikes-list-moto"></div>
-
-                <!-- Car Rental Static Block -->
-                <div style="margin-top: 60px;">
-                    <h2 class="section-title" style="text-align: left; padding-left: 10px;">🚘 Аренда авто</h2>
-                    <div class="acc-card">
-                        <img src="https://placehold.co/800x400/7f8c8d/FFF/png?text=Toyota+Vios" class="acc-img" alt="Toyota Vios">
-                        <div class="acc-content">
-                            <h3 class="acc-title">Toyota Vios</h3>
-                            <div class="acc-desc">
-                                <p>Надежный, маневренный седан для самостоятельных поездок.</p>
-                            </div>
-                            <!-- Управляется через JS + config -->
-                            <button class="btn btn--primary car-rental-btn" style="width: 100%;">Забронировать авто</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW: ACCOMMODATION -->
-        <div id="view-accommodation" class="view">
-            <div class="section">
-                <h1 class="section-title">Проживание</h1>
-                <div class="acc-card">
-                    <img src="https://placehold.co/800x400/8e44ad/FFF/png?text=Green+Hill+Resort" class="acc-img" alt="Green Hill Resort">
-                    <div class="acc-content">
-                        <h3 class="acc-title">🌴 Green Hill Resort & Spa</h3>
-                        <div class="acc-desc">Ваш оазис в центре Муйне. Бунгало, бассейн, бар.</div>
-                        <!-- Управляется через JS + config -->
-                        <button class="btn btn--primary accommodation-btn" style="width: 100%;">Узнать цены</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- VIEW: SERVICES -->
-        <div id="view-services" class="view">
-            <div class="section">
-                <h1 class="section-title">Наши сервисы</h1>
-                <div id="services-list" class="service-list"></div>
-            </div>
-        </div>
-
-        <!-- VIEW: CONTACTS -->
-        <div id="view-contacts" class="view">
-            <div class="section">
-                <h1 class="section-title">Контакты</h1>
-                <div class="contacts-wrapper">
-                    <div class="contact-card">
-                        <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                        <h3>Напишите нам</h3>
-                        <!-- Управляется через JS + config -->
-                        <button class="btn btn--primary contact-whatsapp-btn">Открыть WhatsApp</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer Form -->
-        <section class="footer-form" id="contact-form-section">
-            <div class="form-container">
-                <h2 style="color: white; text-align: center; margin-bottom: 12px;">Остались вопросы?</h2>
-                <form class="footer-contact-form">
-                    <input type="text" class="form-input" placeholder="Ваше имя" required>
-                    <input type="tel" class="form-input" placeholder="Ваш WhatsApp" required>
-                    <button type="submit" class="btn" style="background: white; color: var(--primary);">Жду звонка</button>
-                </form>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Floating Action Button -->
-    <a href="#" target="_blank" class="floating-btn"><i class="fa-regular fa-comment-dots"></i></a>
-
-    <!-- ВАЖНО: Подключение главного модуля -->
-    <script type="module" src="js/app.js"></script>
+  <!-- Vue App будет монтироваться сюда -->
+  <div id="app"></div>
+  
+  <!-- Vite скрипт (при разработке) / оптимизированный при build -->
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>
