@@ -35,9 +35,9 @@
 
 <script setup>
 import { computed } from 'vue';
-import { useToursStore } from '@stores/tours.js';
-import BikeCard from '@components/rentals/BikeCard.vue';
-import CarRentalCard from '@components/rentals/CarRentalCard.vue';
+import { useToursStore } from '@/stores/tours.js';
+import BikeCard from '@/components/rentals/BikeCard.vue';
+import CarRentalCard from '@/components/rentals/CarRentalCard.vue';
 
 const toursStore = useToursStore();
 

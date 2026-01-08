@@ -38,7 +38,7 @@
 </template>
 
 <script setup>
-import { useAppStore } from '@stores/app.js';
+import { useAppStore } from '@/stores/app.js';
 
 const appStore = useAppStore();
 

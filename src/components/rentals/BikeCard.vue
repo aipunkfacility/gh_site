@@ -42,7 +42,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
-import { useAppStore } from '@stores/app.js';
+import { useAppStore } from '@/stores/app.js';
 
 const appStore = useAppStore();
 

@@ -8,5 +8,5 @@
 </template>
 
 <script setup>
-import AccommodationCard from '@components/accommodation/AccommodationCard.vue';
+import AccommodationCard from '@/components/accommodation/AccommodationCard.vue';
 </script>

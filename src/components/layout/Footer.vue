@@ -34,7 +34,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useAppStore } from '@stores/app.js';
+import { useAppStore } from '@/stores/app.js';
 import FooterContent from './FooterContent.vue';
 
 const appStore = useAppStore();

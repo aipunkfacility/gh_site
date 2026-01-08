@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import ServiceCard from '@components/services/ServiceCard.vue';
+import ServiceCard from '@/components/services/ServiceCard.vue';
 
 const services = [
   { id: 1, title: 'Трансфер из аэропорта', icon: 'fa-car', description: 'Встреча и трансфер с комфортом' },

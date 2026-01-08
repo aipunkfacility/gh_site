@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
-import { useAppStore } from '@stores/app.js';
-import ContactCard from '@components/contacts/ContactCard.vue';
+import { useAppStore } from '@/stores/app.js';
+import ContactCard from '@/components/contacts/ContactCard.vue';
 
 const appStore = useAppStore();
 

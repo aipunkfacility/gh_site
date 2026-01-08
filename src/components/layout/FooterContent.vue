@@ -74,7 +74,7 @@
 </template>
 
 <script setup>
-import { useAppStore } from '@stores/app.js';
+import { useAppStore } from '@/stores/app.js';
 import { RouterLink } from 'vue-router';
 
 const appStore = useAppStore();
