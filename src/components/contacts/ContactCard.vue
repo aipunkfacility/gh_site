@@ -4,10 +4,17 @@
     <div class="contact-icon">
       <i :class="`fa-brands fa-${icon}`"></i>
     </div>
-    <h3>{{ title }}</h3>
-    <button class="btn btn--primary" @click="action">
-      Связаться
-    </button>
+
+    <div class="contact-content">
+      <h3>{{ title }}</h3>
+      <p class="contact-subtitle">
+        {{ subtitle }}
+      </p>
+
+      <button class="btn btn--primary" @click="action">
+        Связаться
+      </button>
+    </div>
   </div>
 </template>
 
@@ -21,12 +28,16 @@ defineProps({
   },
   title: {
     type: String,
-    required: true
+    required: true,
+  },
+  subtitle: {
+    type: String,
+    required: true,
   },
   action: {
     type: Function,
-    required: true
-  }
+    required: true,
+  },
 });
 </script>
 
@@ -37,6 +48,10 @@ defineProps({
   border-radius: var(--radius-card);
   padding: var(--spacing-xl);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
 }
 
 .contact-icon {
@@ -49,6 +64,22 @@ defineProps({
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  margin: 0 auto var(--spacing-
-                     }
-  </style>
+}
+
+.contact-content {
+  flex: 1;
+}
+
+.contact-content h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: var(--text-dark);
+}
+
+.contact-subtitle {
+  margin: 0 0 16px;
+  color: var(--text-gray);
+  font-size: 14px;
+  line-height: 1.5;
+}
+</style>
