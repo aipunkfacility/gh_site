@@ -35,7 +35,7 @@
           </div>
           <div class="meta-item">
             <i class="fa-solid fa-star"></i>
-            <span>{{ tour.rating }} ({{ tour.reviews }})</span>
+            <span>{{ tour.rating }} ({{ tour.reviews }} отзывов)</span>
           </div>
         </div>
 
@@ -104,10 +104,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
-import { useToursStore } from '@stores/tours.js';
-import { useAppStore } from '@stores/app.js';
+import { useToursStore } from '@/stores/tours.js';
+import { useAppStore } from '@/stores/app.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -118,7 +118,6 @@ const isLoading = ref(false);
 const showStickyBar = ref(false);
 
 const tourId = computed(() => parseInt(route.params.id));
-
 const tour = computed(() => toursStore.getTourById(tourId.value));
 
 const goBack = () => {
@@ -133,15 +132,20 @@ const bookTour = () => {
   }
 };
 
+const handleScroll = () => {
+  showStickyBar.value = window.scrollY > 300;
+};
+
 onMounted(async () => {
   isLoading.value = true;
   await toursStore.fetchTours();
   isLoading.value = false;
   
-  // Показываем sticky bar только на мобильных
-  window.addEventListener('scroll', () => {
-    showStickyBar.value = window.scrollY > 300;
-  });
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
 });
 </script>
 
@@ -155,7 +159,7 @@ onMounted(async () => {
 }
 
 .tour-detail-content {
-  padding-top: 70px;
+  padding-top: 20px;
 }
 
 .tour-header {
