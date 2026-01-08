@@ -358,4 +358,23 @@ window.addEventListener('unhandledrejection', (event) => {
     console.error('❌ Необработанное Promise rejection:', event.reason);
 });
 
+import { initRouter } from './router.js';
+
+// ... остальной код ...
+
+// Инициализация приложения
+function initApp() {
+  try {
+    console.log('🚀 App Initialized via Modules');
+    
+    // ... остальной код initApp ...
+    
+    // Инициализируем роутер в конце
+    initRouter();
+  } catch (error) {
+    console.error('❌ Critical error during app initialization:', error);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', initApp);
+
