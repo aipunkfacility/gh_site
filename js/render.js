@@ -1,9 +1,11 @@
 import { navigateTo } from './router.js';
 
+// ЕДИНЫЙ НОМЕР ДЛЯ ВСЕХ КНОПОК
+const PHONE = '84372733431'; 
+
 // Генерация карточки тура
 export function createCardHTML(item) {
     const badgeHTML = item.badge ? `<span class="badge badge--${item.badge === 'ХИТ' ? 'hit' : 'new'}">${item.badge}</span>` : '';
-    // Обратите внимание: мы используем data-id для обработки клика в app.js
     return `
         <article class="card tour-card-trigger" data-id="${item.id}">
             <div class="card__image-wrapper">
@@ -24,6 +26,9 @@ export function createCardHTML(item) {
 
 // Генерация карточки байка
 export function createBikeCard(bike) {
+    const text = `Здравствуйте! Хочу арендовать байк: ${bike.model}`;
+    const link = `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
+
     return `
        <div class="bike-card">
            <img src="${bike.image}" alt="${bike.model}" class="bike-card__img">
@@ -37,7 +42,7 @@ export function createBikeCard(bike) {
                </div>
                <p style="font-size: 14px; color: var(--text-gray); margin-bottom: 16px;">${bike.desc}</p>
                <div class="bike-price">${bike.price} <span style="font-size: 12px; font-weight: 400; color: #999;">/ сутки</span></div>
-               <button class="btn btn--primary" style="width: 100%; padding: 12px;" onclick="window.open('https://wa.me/84372733431?text=Здравствуйте, хочу забронировать тур', '_blank')"
+               <button class="btn btn--primary" style="width: 100%; padding: 12px;" onclick="window.open('${link}', '_blank')">Забронировать</button>
            </div>
        </div>
    `;
@@ -45,13 +50,16 @@ export function createBikeCard(bike) {
 
 // Генерация сервиса
 export function createServiceHTML(item) {
+    const text = `Здравствуйте! Интересует услуга: ${item.title}`;
+    const link = `https://wa.me/${PHONE}?text=${encodeURIComponent(text)}`;
+
     return `
        <div class="service-item">
            <img src="${item.image}" alt="${item.title}">
            <div class="service-item-content">
                <h3>${item.title}</h3>
                <p style="color: var(--text-gray); margin-bottom: 16px; white-space: pre-line;">${item.desc}</p>
-               <button class="btn btn--secondary" style="width: 100%;" onclick="alert('Переход в WhatsApp...')">${item.btnText}</button>
+               <button class="btn btn--secondary" style="width: 100%;" onclick="window.open('${link}', '_blank')">${item.btnText}</button>
            </div>
        </div>
    `;
@@ -111,4 +119,3 @@ export function renderTourDetail(tour) {
         </div>
     `;
 }
-
