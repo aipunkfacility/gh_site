@@ -50,3 +50,5 @@ defineProps({
   justify-content: center;
   font-size: 24px;
   margin: 0 auto var(--spacing-
+                     }
+  </style>
