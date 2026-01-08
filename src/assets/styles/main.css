@@ -1,14 +1,14 @@
-/* 1. Переменные и сброс */
-@import '../css/variables.css';
-
-/* 2. Tailwind (база) */
+/* 1. Подключаем Tailwind (требует tailwind.config.js и postcss.config.js из Шага 1) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 3. Кастомные стили (переопределяют Tailwind при необходимости) */
-@import '../css/layout.css';
-@import '../css/components.css';
-@import '../css/buttons.css';
-@import '../css/pages.css';
-@import '../css/style.css';
+/* 2. Подключаем твои кастомные стили */
+/* Внимание: убедись, что файлы лежат в src/assets/css/ */
+
+@import '@/assets/css/variables.css';
+@import '@/assets/css/layout.css';
+@import '@/assets/css/components.css';
+@import '@/assets/css/buttons.css';
+@import '@/assets/css/pages.css';
+@import '@/assets/css/style.css';
