@@ -3,6 +3,13 @@ import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  },
   routes: [
     {
       path: '/',
@@ -10,21 +17,10 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/accommodation',
-      name: 'accommodation',
-      component: () => import('../views/Accommodation.vue')
-    },
-    {
-      path: '/services',
-      name: 'services',
-      component: () => import('../views/Services.vue')
-    },
-    {
       path: '/tours',
       name: 'tours',
       component: () => import('../views/Tours.vue')
     },
-    // --- ВАЖНО: Добавлен маршрут для детальной страницы тура ---
     {
       path: '/tours/:id',
       name: 'tour-detail',
@@ -37,6 +33,16 @@ const router = createRouter({
       component: () => import('../views/Rentals.vue')
     },
     {
+      path: '/accommodation',
+      name: 'accommodation',
+      component: () => import('../views/Accommodation.vue')
+    },
+    {
+      path: '/services',
+      name: 'services',
+      component: () => import('../views/Services.vue')
+    },
+    {
       path: '/contacts',
       name: 'contacts',
       component: () => import('../views/Contacts.vue')
@@ -46,14 +52,7 @@ const router = createRouter({
       name: 'not-found',
       component: () => import('../views/NotFound.vue')
     }
-  ],
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0 }
-    }
-  }
+  ]
 })
 
 export default router
