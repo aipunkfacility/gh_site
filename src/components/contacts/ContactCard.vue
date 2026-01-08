@@ -17,7 +17,7 @@ import { defineProps } from 'vue';
 defineProps({
   icon: {
     type: String,
-    required: true
+    required: true,
   },
   title: {
     type: String,
