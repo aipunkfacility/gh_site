@@ -1,15 +1,18 @@
+// Импортируем данные и функции из соседних файлов
 import { toursData, bikesData, servicesData } from './data.js';
 import { createCardHTML, createBikeCard, createServiceHTML, renderTourDetail } from './render.js';
 import { navigateTo } from './router.js';
 
-// Инициализация
+// Инициализация приложения
 function initApp() {
-    console.log('App Initialized');
+    console.log('App Initialized via Modules');
 
     // 1. Рендеринг Популярных туров (Главная)
     const popularGrid = document.getElementById('home-popular-grid');
     if(popularGrid) {
+        // Берем первые 4 тура
         popularGrid.innerHTML = toursData.slice(0, 4).map(createCardHTML).join('');
+        setupTourClickEvents(); // Вешаем клики
     }
 
     // 2. Рендеринг Всех туров (Каталог)
@@ -24,24 +27,24 @@ function initApp() {
     // 4. Рендеринг Байков
     renderBikes();
 
-    // 5. Настройка событий (клики по кнопкам и ссылкам)
+    // 5. Настройка событий (клики по ссылкам меню и фильтрам)
     setupEventListeners();
 }
 
-// Функция рендера туров (с возможностью фильтрации)
+// Функция рендера списка туров
 function renderTours(data) {
     const container = document.getElementById('tours-grid');
     if(container) {
         container.innerHTML = data.map(createCardHTML).join('');
-        // После рендера вешаем события клика на новые карточки
-        setupTourClickEvents();
+        setupTourClickEvents(); // Обновляем клики для новых карточек
     }
 }
 
 // Функция рендера байков по категориям
 function renderBikes() {
-    const renderCat = (id, type) => {
-        const el = document.getElementById(id);
+    const renderCat = (elementId, type) => {
+        const el = document.getElementById(elementId);
+        // Фильтруем данные из data.js
         if(el) el.innerHTML = bikesData.filter(b => b.categoryType === type).map(createBikeCard).join('');
     };
 
@@ -51,27 +54,29 @@ function renderBikes() {
     renderCat('bikes-list-moto', 'moto');
 }
 
-// Обработчики событий
+// Глобальные обработчики событий
 function setupEventListeners() {
-    // Навигация через data-link
+    // 1. Навигация через data-link (вместо onclick в HTML)
     document.body.addEventListener('click', (e) => {
+        // Ищем ближайший элемент с атрибутом data-link
         const link = e.target.closest('[data-link]');
         if (link) {
-            e.preventDefault();
-            navigateTo(link.dataset.link);
+            e.preventDefault(); // Отменяем стандартный переход ссылки
+            navigateTo(link.dataset.link); // Вызываем функцию навигации
         }
     });
 
-    // Фильтры туров
+    // 2. Фильтры туров
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            // UI
+            // Убираем класс active у всех кнопок
             filterBtns.forEach(b => b.classList.remove('active'));
+            // Добавляем нажатой
             btn.classList.add('active');
             
-            // Logic
-            const cat = btn.dataset.filter;
+            // Логика фильтрации
+            const cat = btn.dataset.filter || 'all'; // Если атрибута нет, считаем 'all'
             if (cat === 'all') {
                 renderTours(toursData);
             } else {
@@ -81,7 +86,7 @@ function setupEventListeners() {
         });
     });
 
-    // Бургер меню
+    // 3. Бургер меню (Мобильное)
     const burgerBtn = document.getElementById('burgerBtn');
     if(burgerBtn) {
         burgerBtn.addEventListener('click', () => {
@@ -89,10 +94,11 @@ function setupEventListeners() {
             const icon = burgerBtn.querySelector('i');
             menu.classList.toggle('active');
             
+            // Меняем иконку (гамбургер <-> крестик)
             if (menu.classList.contains('active')) {
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-xmark');
-                document.body.style.overflow = 'hidden';
+                document.body.style.overflow = 'hidden'; // Блокируем скролл сайта
             } else {
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
@@ -102,29 +108,34 @@ function setupEventListeners() {
     }
 }
 
-// Клик по карточке тура
+// Специальная функция для клика по карточке тура
 function setupTourClickEvents() {
     document.querySelectorAll('.tour-card-trigger').forEach(card => {
-        card.addEventListener('click', () => {
+        // Удаляем старые слушатели (клон ноды), чтобы не дублировать, или просто вешаем новые
+        // Простой вариант:
+        card.onclick = () => {
             const id = parseInt(card.dataset.id);
             openTourDetail(id);
-        });
+        };
     });
 }
 
-// Открытие детальной страницы
+// Открытие детальной страницы тура
 function openTourDetail(id) {
+    // Ищем тур в массиве toursData
     const tour = toursData.find(t => t.id === id);
     if (!tour) return;
 
     const container = document.getElementById('tour-detail-content');
     const priceEl = document.getElementById('detail-price-bar');
     
+    // Генерируем HTML через функцию из render.js
     if(container) container.innerHTML = renderTourDetail(tour);
     if(priceEl) priceEl.innerText = tour.price;
 
+    // Переходим на экран деталей
     navigateTo('tour-detail');
 }
 
-// Запуск при загрузке DOM
+// Запуск приложения после загрузки HTML
 document.addEventListener('DOMContentLoaded', initApp);
