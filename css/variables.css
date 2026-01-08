@@ -1,0 +1,174 @@
+/* --- CSS VARIABLES & RESET --- */
+:root {
+  /* Цвета */
+  --primary: #FF6400;
+  --primary-hover: #E55A00;
+  --secondary: #2D5F3E;
+  --dark: #1A2F5A;
+  --white: #FFFFFF;
+  --gray-bg: #F5F5F5;
+  --gray-light: #f5f5f5;
+  --gray-border: #eee;
+  --gray-text: #f0f0f0;
+  --text-gray: #4A4A4A;
+  --whatsapp: #25D366;
+  --telegram: #0088CC;
+  --error: #e74c3c;
+  
+  /* Радиусы */
+  --radius-btn: 12px;
+  --radius-card: 16px;
+  --radius-large: 20px;
+  
+  /* Тени */
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-strong: 0 4px 20px rgba(0,0,0,0.1);
+  
+  /* Переходы */
+  --transition: 0.3s ease;
+  --transition-fast: 0.2s;
+  
+  /* Размеры */
+  --header-height: 70px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 40px;
+}
+
+/* Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--dark);
+  background-color: var(--white);
+  line-height: 1.5;
+  font-size: 16px;
+  padding-top: var(--header-height);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: color var(--transition);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input {
+  font-family: inherit;
+}
+
+/* Typography */
+h1 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: var(--dark);
+}
+
+h2 {
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--secondary);
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--dark);
+}
+
+h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--dark);
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  padding: 0 var(--spacing-lg);
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Desktop Typography */
+@media (min-width: 1200px) {
+  h1 {
+    font-size: 64px;
+  }
+
+  h2 {
+    font-size: 48px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  body {
+    font-size: 18px;
+  }
+
+  :root {
+    --header-height: 90px;
+  }
+}
+
+/* Views / SPA Logic */
+.view {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.view.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
