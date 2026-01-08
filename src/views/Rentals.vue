@@ -78,6 +78,7 @@ const getBikesByCategory = (category) => {
 <style scoped>
 .rentals {
   width: 100%;
+  padding: 20px 0 60px;
 }
 
 .rentals-intro {
@@ -88,6 +89,12 @@ const getBikesByCategory = (category) => {
   line-height: 1.6;
 }
 
+.text-center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .bikes-section {
   margin-bottom: 60px;
 }
@@ -95,4 +102,33 @@ const getBikesByCategory = (category) => {
 .rentals-category {
   margin-top: 40px;
   margin-bottom: 24px;
-  padding-left: 10px
+  padding-left: 10px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--secondary);
+}
+
+.bikes-grid {
+  display: grid;
+  gap: var(--spacing-xl);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .bikes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .bikes-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.cars-section {
+  margin-top: 60px;
+  padding-top: 60px;
+  border-top: 1px solid #eee;
+}
+</style>
