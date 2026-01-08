@@ -1,142 +1,65 @@
-<!-- src/views/Tours.vue -->
-<template>
-  <div class="tours-view">
-    <div class="section section--gray">
-      <div class="container">
-        <h1 class="section-title">Все экскурсии</h1>
+<script setup>
+import { useToursStore } from '@/stores/tours'
+import TourCard from '@/components/tours/TourCard.vue'
 
-        <!-- Фильтры -->
-        <div class="filters-wrapper">
-          <div class="filters">
-            <button
-              v-for="filter in filters"
-              :key="filter"
-              class="filter-btn"
-              :class="{ active: activeFilter === filter }"
-              @click="setFilter(filter)"
-            >
-              {{ filterLabels[filter] }}
-            </button>
+const store = useToursStore()
+const tours = store.getAllTours
+</script>
+
+<template>
+  <div class="tours-page">
+    <div class="container">
+      <h1 class="page-title">Наши туры</h1>
+      
+      <div v-if="tours.length > 0" class="grid-3">
+        <div v-for="tour in tours" :key="tour.id" class="tour-item">
+          <!-- Простое отображение, если TourCard сломан -->
+          <div class="card">
+            <div class="card__body">
+              <h3>{{ tour.title }}</h3>
+              <p>{{ tour.description }}</p>
+              <div class="card__footer">
+                <span class="price">{{ tour.price }}</span>
+                <span class="duration">{{ tour.duration }}</span>
+              </div>
+            </div>
           </div>
         </div>
-
-        <!-- Туры -->
-        <div v-if="toursStore.isLoading" class="loading">
-          <p>Загрузка туров...</p>
-        </div>
-        <div v-else-if="filteredTours.length > 0" class="cards-grid">
-          <TourCard 
-            v-for="tour in filteredTours"
-            :key="tour.id"
-            :tour="tour"
-          />
-        </div>
-        <div v-else class="no-tours">
-          <p>Туры по этой категории не найдены</p>
-        </div>
+      </div>
+      
+      <div v-else class="empty-state">
+        <p>Туры пока не добавлены.</p>
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { computed, onMounted } from 'vue';
-import { useToursStore } from '@stores/tours.js';
-import TourCard from '@components/tours/TourCard.vue';
-
-const toursStore = useToursStore();
-
-const filters = ['all', 'jeep', 'mountain', 'sea', 'city'];
-const filterLabels = {
-  all: 'Все',
-  jeep: 'Джип-туры',
-  mountain: 'Горы',
-  sea: 'Море',
-  city: 'Город'
-};
-
-const activeFilter = computed(() => toursStore.filter);
-
-const setFilter = (filter) => {
-  toursStore.setFilter(filter);
-};
-
-const filteredTours = computed(() => toursStore.filteredTours);
-
-onMounted(() => {
-  toursStore.fetchTours();
-});
-</script>
-
 <style scoped>
-.tours-view {
-  padding-top: 20px;
-}
-
-.loading,
-.no-tours {
+.page-title {
+  margin: 2rem 0;
+  font-size: 2.5rem;
   text-align: center;
-  padding: 60px 20px;
-  color: var(--text-gray);
-  font-size: 18px;
 }
-
-.filters-wrapper {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.filters {
-  display: flex;
-  gap: var(--spacing-sm);
-  overflow-x: auto;
-  padding-bottom: var(--spacing-lg);
-  margin-bottom: var(--spacing-xl);
-  scrollbar-width: none;
-}
-
-.filters::-webkit-scrollbar {
-  display: none;
-}
-
-.filter-btn {
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: 20px;
-  background: var(--gray-light);
-  color: var(--text-gray);
-  font-weight: 600;
-  white-space: nowrap;
-  transition: var(--transition-fast);
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-}
-
-.filter-btn.active,
-.filter-btn:hover {
-  background: var(--secondary);
-  color: white;
-}
-
-.cards-grid {
+.grid-3 {
   display: grid;
-  gap: var(--spacing-xl);
-  grid-template-columns: 1fr;
-  padding: 0 20px 60px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding-bottom: 4rem;
 }
-
-@media (min-width: 768px) {
-  .cards-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.card {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-
-@media (min-width: 1200px) {
-  .cards-grid {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 1280px;
-    margin: 0 auto;
-  }
+.card__body {
+  padding: 1.5rem;
+}
+.card__footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  color: var(--primary-color, #2c3e50);
 }
 </style>
